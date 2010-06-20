@@ -1,0 +1,14 @@
+{
+  "name": "yui-compressor",
+  "description": "Bindings to the YUI Compressor",
+  "version": "0.1.0",
+  "author": "Tim-Smart",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/Tim-Smart/node-yui-compressor.git"
+  },
+  "engine": [ "node >=0.1.90" ],
+  "directories": {
+    "lib": "./lib/yui-compressor"
+  }
+}
