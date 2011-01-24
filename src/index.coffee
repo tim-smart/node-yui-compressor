@@ -21,8 +21,8 @@ exports.compile = (input, options, callback) ->
   args = ['-jar', JAR_PATH]
 
   Object.keys(options).forEach (key) ->
-    args.push "--$key"
-    args.push "${options[key]}"
+    args.push "--#{key}"
+    args.push "#{options[key]}" if typeof options[key] == 'string'
 
   compiler = spawn JAVA_PATH, args
   result = ''
