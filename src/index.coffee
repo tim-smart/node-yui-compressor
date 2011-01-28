@@ -21,9 +21,9 @@ exports.compile = (input, options, callback) ->
   args = ['-jar', JAR_PATH]
 
   Object.keys(options).forEach (key) ->
-    continue if options[key] == false
+    return if options[key] is false
     args.push "--#{key}"
-    args.push options[key].toString() unless options[key] == true
+    args.push options[key].toString() unless options[key] is true
 
   compiler = spawn JAVA_PATH, args
   result = ''
