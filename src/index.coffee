@@ -26,12 +26,14 @@ exports.compile = (input, options, callback) ->
     args.push options[key].toString() unless options[key] is true
 
   compiler = spawn JAVA_PATH, args
-  result = ''
+  result   = ''
 
-  compiler.stdout.addListener 'data', (data) ->
+  compiler.stdout.setEncoding 'utf8'
+
+  compiler.stdout.on 'data', (data) ->
     result += data
 
-  compiler.addListener 'exit', (code) ->
+  compiler.on 'exit', (code) ->
     callback result
 
   compiler.stdin.write input
