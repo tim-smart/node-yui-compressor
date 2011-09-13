@@ -16,7 +16,7 @@ exports.compile = (input, options, callback) ->
     options = result
   else
     callback = options
-    options = OPTIONS
+    options  = OPTIONS
 
   args = ['-jar', JAR_PATH]
 
@@ -39,9 +39,11 @@ exports.compile = (input, options, callback) ->
     errors += data
 
   compiler.on 'exit', (code) ->
-    # If exit code isn't 0, then return buffered STDERR, otherwise
-    # return null, per node convention.
-    error = if code then errors else null
+    # If exit code isn't 0, then return buffered STDERR
+    if code isnt 0
+      error      = new Error errors
+      error.code = code
+    else error   = null
     callback(error, result)
 
   compiler.stdin.write input
