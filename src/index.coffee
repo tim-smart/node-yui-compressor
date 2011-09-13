@@ -27,14 +27,22 @@ exports.compile = (input, options, callback) ->
 
   compiler = spawn JAVA_PATH, args
   result   = ''
+  errors   = ''
 
   compiler.stdout.setEncoding 'utf8'
 
   compiler.stdout.on 'data', (data) ->
     result += data
+  
+  # Buffer STDERR into errors
+  compiler.stderr.on 'data', (data) ->
+    errors += data
 
   compiler.on 'exit', (code) ->
-    callback result
+    # If exit code isn't 0, then return buffered STDERR, otherwise
+    # return null, per node convention.
+    error = if code then errors else null
+    callback(error, result)
 
   compiler.stdin.write input
   compiler.stdin.end()
